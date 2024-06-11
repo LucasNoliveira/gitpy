@@ -5,7 +5,7 @@ def git_status():
     try:
         result = subprocess.run(["git", "status", "-s"], check=True, capture_output=True, text=True)
         modified_files = [file.strip() for file in result.stdout.strip().split('\n') if file.strip()]
-        files_dict = {str(index + 1): re.sub(r'^M\s+', '', file) for index, file in enumerate(modified_files)}
+        files_dict = {str(index + 1): re.sub(r'^(M|\?\?)\s+', '', file) for index, file in enumerate(modified_files)}
 
         if not files_dict:
             print("Sem arquivos modificados.")
